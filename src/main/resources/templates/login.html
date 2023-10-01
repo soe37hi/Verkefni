@@ -1,0 +1,29 @@
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Log in</title>
+</head>
+<body>
+<h2>Log in to your account</h2>
+<form action="#" th:action="@{/login}" th:object="${user}"  method="post">
+    <input type="text" name="username" id="username" th:field="*{username}"/>
+    <input type="password" name="password" id="password" th:value="*{password}"/>
+    <input type="submit" value="Log in"/>
+</form>
+
+<p style="display: inline;">Don't have an account?</p>
+<button style="display: inline;" onclick="signUp()">Sign up</button>
+
+
+<th:block th:if="${loginFailed}">
+    <p style="color: red;">Incorrect username or password</p>
+</th:block>
+
+<script>
+    function signUp() {
+        window.location.href = "signup";
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Log in</title>
+</head>
+<body>
+Session PIN:
+
+<p th:text="${randomPin}"></p>
+
+
+<p>Players joined: <span th:text="${totalPlayers}"></span></p>
+
+
+<form id="startGameForm" action="/gameHost" method="post">
+    <input type="hidden" name="sessionId" th:value="${randomPin}" />
+    <button type="submit">Start game</button>
+</form>
+
+</body>
+</html>

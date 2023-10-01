@@ -1,0 +1,19 @@
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Log in</title>
+</head>
+<body>
+<h2>Enter session PIN</h2>
+
+<form action="#" th:action="@{/joinSession}" method="post">
+    <input type="text" name="sessionID" id="sessionID"/>
+    <input type="submit" value="Enter"/>
+</form>
+
+<th:block th:if="${sessionNotFound}">
+    <p style="color: red;">Session PIN not recognized</p>
+</th:block>
+
+</body>
+</html>

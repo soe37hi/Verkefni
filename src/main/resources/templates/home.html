@@ -1,0 +1,39 @@
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Log in</title>
+</head>
+<body>
+
+<p> Ef notandi er ekki loggaður inn:</p>
+
+<button onclick="playAsGuest()">Play as guest</button>
+<button onclick="playAsUser()">Play as user</button>
+
+
+<p> Ef notandi er loggaður inn:</p>
+
+<button onclick="playAsGuest()">Play</button>
+<button onclick="signOut()">Sign out</button>
+<button onclick="setMoviePreferences()">Set movie preferences</button>
+
+<script>
+    function playAsGuest() {
+        window.location.href = "joinOrCreateSession";
+    }
+
+    function playAsUser() {
+        window.location.href = "login";
+    }
+
+    function signOut() {
+        window.location.href = "login";
+    }
+
+    function setMoviePreferences() {
+        window.location.href = "setMoviePreferences";
+    }
+</script>
+
+</body>
+</html>

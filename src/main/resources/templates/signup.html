@@ -1,0 +1,19 @@
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign up</title>
+</head>
+<body>
+<h2>Sign up for an account</h2>
+<form action="#" th:action="@{/signup}" th:object="${user}"  method="post">
+    <input type="text" name="username" id="username" th:field="*{username}"/>
+    <input type="password" name="password" id="password" th:value="*{password}"/>
+    <input type="submit" value="Sign up"/>
+</form>
+
+<th:block th:if="${usernameTaken}">
+    <p style="color: red;">Username is already taken. Please choose a different one.</p>
+</th:block>
+
+</body>
+</html>
