@@ -22,6 +22,8 @@ public class UserController {
         this.userService = userService;
     }
 
+
+    // Hvernig signup er útfært:
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public String signupGET(User user){
 
@@ -33,17 +35,23 @@ public class UserController {
         if(result.hasErrors()){
             return "redirect:/signup";
         }
+
+        // Athugum hvort það sé einhver til með þetta username
         User exists = userService.findByUsername(user.getUsername());
 
+        // Ef username er frátekið koma skilaboð
         if (exists != null){
             redirectAttributes.addFlashAttribute("usernameTaken", true);
             return "redirect:/signup";
         }
 
+        // Annars er user búinn til, vistaður og notandi sendur í login
         userService.save(user);
-        return "redirect:/";
+        return "redirect:/login";
     }
 
+
+    // Hvernig login er útfært:
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginGET(User user){
 
@@ -56,14 +64,17 @@ public class UserController {
             return "login";
         }
 
+        // Athugum hvort login sé valid, þ.e. það er til user með þetta password
         User exists = userService.login(user);
 
+        // Ef valid er notandi loggaður inn og sendur á heimasíðuna
         if(exists != null){
             session.setAttribute("LoggedInUser", exists);
             model.addAttribute("LoggedInUser", exists);
             return "redirect:/";
         }
 
+        // Annars koma skilaboð um að login failaði
         redirectAttributes.addFlashAttribute("loginFailed", true);
         return "redirect:/login";
     }
