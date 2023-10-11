@@ -2,6 +2,7 @@ package is.hi.hbv501g.verkefni.Controllers;
 
 import is.hi.hbv501g.verkefni.Persistence.Entities.User;
 import is.hi.hbv501g.verkefni.Services.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -77,6 +78,15 @@ public class UserController {
         // Annars koma skilaboð um að login failaði
         redirectAttributes.addFlashAttribute("loginFailed", true);
         return "redirect:/login";
+    }
+
+
+    @RequestMapping(value = "/signOut", method = RequestMethod.POST)
+    public String signOut(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        session.invalidate();
+
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/setMoviePreferences", method = RequestMethod.GET)

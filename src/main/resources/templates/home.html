@@ -5,17 +5,31 @@
 </head>
 <body>
 
-<p> Ef notandi er ekki loggaður inn:</p>
+
+
+
+<div th:if="${user == null}">
 
 <button onclick="playAsGuest()">Play as guest</button>
 <button onclick="playAsUser()">Play as user</button>
 
+</div>
 
-<p> Ef notandi er loggaður inn:</p>
+
+
+
+<div th:if="${user != null}">
 
 <button onclick="playAsGuest()">Play</button>
-<button onclick="signOut()">Sign out</button>
+    <form th:action="@{/signOut}" method="post">
+        <button type="submit">Sign Out</button>
+    </form>
 <button onclick="setMoviePreferences()">Set movie preferences</button>
+
+
+<p>Welcome, <span th:text="${user?.username}"></span>!</p>
+
+</div>
 
 <script>
     function playAsGuest() {
