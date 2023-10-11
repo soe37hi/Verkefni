@@ -10,5 +10,15 @@
 <p>Waiting for host to start</p>
 
 
+<!-- Refresh-a síðuna á 3 sek. fresti til að uppfæra fjölda spilara
+og athuga hvort host sé búinn að start-a leik -->
+<script>
+    function refreshPage() {
+        location.reload();
+    }
+
+    setInterval(refreshPage, 3000);
+</script>
+
 </body>
 </html>
