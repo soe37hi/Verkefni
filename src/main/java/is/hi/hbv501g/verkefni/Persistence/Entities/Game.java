@@ -13,17 +13,20 @@ public class Game {
 
     private String sessionID;
     private String title;
-    private String year;
+    private int year;
+
+    private String posterURL;
     private long votes;
 
     public Game (){
 
     }
 
-    public Game(String sessionID, String title, String year, long votes){
+    public Game(String sessionID, String title, int year, String posterURL, long votes){
         this.sessionID = sessionID;
         this.title = title;
         this.year = year;
+        this.posterURL = posterURL;
         this.votes = votes;
     }
 
@@ -51,12 +54,20 @@ public class Game {
         this.title = title;
     }
 
-    public String getYear() {
+    public int getYear() {
         return year;
     }
 
-    public void setYear(String year) {
+    public void setYear(int year) {
         this.year = year;
+    }
+
+    public String getPosterURL() {
+        return posterURL;
+    }
+
+    public void setPosterURL(String posterURL) {
+        this.posterURL = posterURL;
     }
 
     public long getVotes() {

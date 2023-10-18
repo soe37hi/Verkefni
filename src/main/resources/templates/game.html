@@ -1,13 +1,25 @@
-<html xmlns:th="https://thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Log in</title>
 </head>
 <body>
-Movie
+<div>
+    <img th:src="${game.posterURL}" alt="Your Image">
+</div>
 
-<p th:text="${randomPin}"></p>
+<div>
+    <p th:text="${game.title + ' (' + game.year + ')' }">Default Text Goes Here</p>
+</div>
 
-
+<div>
+    <form action="/game" method="post" style="display: inline-block;">
+        <button type="submit" name="action" value="no">No</button>
+    </form>
+    <form action="/game" method="post" style="display: inline-block;">
+        <button type="submit" name="action" value="yes">Yes</button>
+    </form>
+</div>
 </body>
 </html>

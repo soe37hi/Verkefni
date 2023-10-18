@@ -9,4 +9,8 @@ public interface GameService {
     Game save(Game game);
     List<Game> findAll();
 
+    void addMoviesToGame(int n, String sessionId);
+
+    List<Game> findAllBySessionID(String sessionID);
+
 }

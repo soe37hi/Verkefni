@@ -12,15 +12,18 @@ public class Movie {
     private long ID;
 
     private String title;
-    private String year;
+    private int year;
+
+    private String imageURL;
 
     public Movie(){
 
     }
 
-    public Movie(String title, String year){
+    public Movie(String title, int year, String imageURL){
         this.title = title;
         this.year = year;
+        this.imageURL = imageURL;
     }
 
     public long getID() {
@@ -39,12 +42,20 @@ public class Movie {
         this.title = title;
     }
 
-    public String getYear() {
+    public int getYear() {
         return year;
     }
 
-    public void setYear(String year) {
+    public void setYear(int year) {
         this.year = year;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 }
 

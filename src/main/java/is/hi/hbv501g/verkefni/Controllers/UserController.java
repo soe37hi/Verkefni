@@ -47,6 +47,7 @@ public class UserController {
         }
 
         // Annars er user búinn til, vistaður og notandi sendur í login
+        user.setIsAdmin(false);
         userService.save(user);
         return "redirect:/login";
     }
