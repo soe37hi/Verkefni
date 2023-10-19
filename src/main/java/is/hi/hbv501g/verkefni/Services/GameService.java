@@ -13,4 +13,6 @@ public interface GameService {
 
     List<Game> findAllBySessionID(String sessionID);
 
+    void increaseVote(String title, String sessionID);
+
 }

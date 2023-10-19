@@ -8,6 +8,7 @@ import is.hi.hbv501g.verkefni.Services.GameService;
 import is.hi.hbv501g.verkefni.Services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -56,5 +57,8 @@ public class GameServiceImplementation implements GameService {
         return gameRepository.findAllBySessionID(sessionID);
     }
 
-
+    @Transactional
+    public void increaseVote(String title, String sessionID){
+        gameRepository.increaseVote(title,sessionID);
+    }
 }
