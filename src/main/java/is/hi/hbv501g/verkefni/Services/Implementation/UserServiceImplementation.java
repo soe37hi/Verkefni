@@ -5,11 +5,13 @@ import is.hi.hbv501g.verkefni.Persistence.Repositories.UserRepository;
 import is.hi.hbv501g.verkefni.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.List;
 
 @Service
 public class UserServiceImplementation implements UserService {
+    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     private UserRepository userRepository;
 
@@ -21,6 +23,8 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public User save(User user){
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
         return userRepository.save(user);
     }
 
@@ -40,7 +44,7 @@ public class UserServiceImplementation implements UserService {
     public User login(User user){
         User doesExist = findByUsername(user.getUsername());
         if(doesExist != null){
-            if(doesExist.getPassword().equals(user.getPassword())){
+            if(passwordEncoder.matches(user.getPassword(), doesExist.getPassword())){
                 return doesExist;
             }
         }
