@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movies</title>
+</head>
+<body>
+<h1 th:text="${time}"></h1>
+<table>
+<tr th:each="movie: ${allMovies}">
+    <td th:text="${movie.title}"></td>
+    <td th:text="${movie.year}"></td>
+</tr>
+</table>
+<hr>
+<a th:href="@{/addmovie}">Add a Movie</a>
+</body>
+</html>

@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Add Movie</title>
 </head>
 <body>
 <h1>Add a New Movie</h1>
-
-<form th:action="@{/addmovie}" th:object="${movie}" method="post">
+<form th:action="@{/addmovie}" method="post">
     <div>
         <label for="title">Movie Name:</label>
-        <input type="text" th:field="*{title}" id="title" name="title" required>
+        <input type="text" id="title" name="title" required>
     </div>
     <div>
         <label for="year">Year:</label>
