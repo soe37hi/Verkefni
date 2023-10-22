@@ -15,7 +15,7 @@ if you want to populate the database with preexisting data, run the following co
 psql -h localhost -d moviedb -U postgres -f users.sql
 psql -h localhost -d moviedb -U postgres -f movies.sql
 ```
-the path to these files is Verkefni/src/test/resources/sql
+the path to these files is **Verkefni/src/test/resources/sql**
 make sure you are in the correct directory before running the commands
 
 the admin user created has username admin and password admin
