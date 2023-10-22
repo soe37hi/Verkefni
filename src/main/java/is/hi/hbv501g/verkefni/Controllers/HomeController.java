@@ -20,4 +20,11 @@ public class HomeController {
         return "home";
     }
 
+
+
+    @RequestMapping("/CRUD")
+    public String CRUD(){
+        return "CRUD";
+    }
+
 }

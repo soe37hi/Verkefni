@@ -1,11 +1,28 @@
-<html xmlns:th="https://thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Log in</title>
+    <title>Game List</title>
 </head>
 <body>
+<h1>Results</h1>
 
-<p>Results</p>
-
+<table>
+    <thead>
+    <tr>
+        <th>Movie</th>
+        <th>Votes</th>
+        <!-- Add more table headers for other fields as needed -->
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Iterate through the list of Game entities -->
+    <tr th:each="result : ${results}">
+        <td th:text="${result.title} + ' (' + ${result.year} + ')'"></td>
+        <td th:text="${result.votes}"></td>
+        <!-- Add more table data cells for other fields as needed -->
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

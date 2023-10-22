@@ -13,6 +13,7 @@ public interface GameRepository extends JpaRepository<Game, Long> {
     Game save(Game game);
     List<Game> findAll();
 
+    @Query("SELECT g FROM Game g WHERE g.sessionID = :sessionID ORDER BY g.votes DESC")
     List<Game> findAllBySessionID(String sessionID);
 
     @Modifying
