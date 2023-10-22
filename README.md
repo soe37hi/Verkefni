@@ -10,6 +10,7 @@ This will create the moviedb database
 
 now run these two commands in your shell to populate a few movies and an admin user
 psql -h localhost -d moviedb -U postgres -f users.sql
+
 psql -h localhost -d moviedb -U postgres -f movies.sql
 
 the admin user created has username admin and password admin
