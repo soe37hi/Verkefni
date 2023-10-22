@@ -20,6 +20,21 @@ public class MovieServiceImplementation implements MovieService {
     }
 
     @Override
+    public Movie loadMovie(Long movieID) {
+        return this.movieRepository.findMovieByID(movieID);
+    }
+
+    @Override
+    public Movie updateMovie(Long movieID, Movie editedMovie) {
+        return this.movieRepository.save(editedMovie);
+    }
+
+    @Override
+    public void deleteMovieByID(Long movieID) {
+        this.movieRepository.deleteById(movieID);
+    }
+
+    @Override
     public Movie save(Movie movie){
         return movieRepository.save(movie);
     }

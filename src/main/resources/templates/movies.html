@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Movies</title>
+    <style>
+        /* Define a CSS class to control the image size */
+        .table-image {
+            max-width: 100px; /* Adjust the width as needed */
+            max-height: 100px; /* Adjust the height as needed */
+        }
+    </style>
+
+</head>
+<body>
+<!--
+<h1 th:text="${time}"></h1>
+-->
+
+<h1>All Movies</h1>
+<table>
+<tr th:each="movie: ${allMovies}">
+    <td th:text="${movie.title}"></td>
+    <td th:text="${movie.year}"></td>
+    <td> <img  class="table-image" alt="movieposter" th:src="${movie.imageURL}"></td>
+    <td>
+        <form th:action="@{'/delete/' + ${movie.ID}}" method="post">
+            <button type="submit">Delete</button>
+        </form>
+    </td>
+    <td>
+        <a th:href="@{'/editmovie/' + ${movie.ID}}">Edit</a>
+
+    </td>
+</tr>
+</table>
+<hr>
+<a th:href="@{/addmovie}">Add a Movie</a>
+
+
+</body>
+</html>

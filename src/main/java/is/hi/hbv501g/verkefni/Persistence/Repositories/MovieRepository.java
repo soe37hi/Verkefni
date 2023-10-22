@@ -14,4 +14,6 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 
     @Query(value = "SELECT * FROM movies ORDER BY RANDOM() LIMIT :n", nativeQuery = true)
     List<Movie> getRandomMovies(@Param("n") int n);
+
+    Movie findMovieByID(Long movieID);
 }
