@@ -29,6 +29,15 @@
 
 <p>Welcome, <span th:text="${user?.username}"></span>!</p>
 
+<!-- Greet our admin -->
+<p th:if="${user.isAdmin}">Hello admin</p>
+<div th:if="${user.isAdmin}">
+    <a th:href="@{/addmovie}">Add a Movie</a>
+</div>
+
+
+
+
 </div>
 
 <script>
