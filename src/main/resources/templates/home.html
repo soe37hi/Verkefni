@@ -27,11 +27,6 @@
     </form>
 <button onclick="setMoviePreferences()">Set movie preferences</button>
 
-    <div th:if="${user.isAdmin}">
-        <form th:action="@{/CRUD}" method="post">
-            <button type="submit">CRUD</button>
-        </form>
-    </div>
 
 <p>Welcome, <span th:text="${user?.username}"></span>!</p>
 
