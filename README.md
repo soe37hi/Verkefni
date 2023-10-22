@@ -1,8 +1,10 @@
 # Hugbúnaðarverkefni 1
 
-Skil 3
+##Skil 3
 
-Start by running the following command in your shell: createDB -U postgres moviedb
+###Start by running the following command in your shell: 
+###createDB -U postgres moviedb
+
 enter your postgresql password
 This will create the moviedb database
 
