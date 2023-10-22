@@ -1,11 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Movies</title>
 </head>
 <body>
+<!--
 <h1 th:text="${time}"></h1>
+-->
+
+<h1>All Movies</h1>
 <table>
 <tr th:each="movie: ${allMovies}">
     <td th:text="${movie.title}"></td>
