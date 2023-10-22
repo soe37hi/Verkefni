@@ -57,5 +57,15 @@ public class Movie {
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
     }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "ID=" + ID +
+                ", title='" + title + '\'' +
+                ", year=" + year +
+                ", imageURL='" + imageURL + '\'' +
+                '}';
+    }
 }
 

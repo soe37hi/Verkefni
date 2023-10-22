@@ -23,10 +23,7 @@ public class HomeController {
         return "home";
     }
 
-    @RequestMapping(value = "/addmovie", method = RequestMethod.GET)
-    public String addMovie(Movie movie){
-        return "";
-    }
+
 
 
 }
