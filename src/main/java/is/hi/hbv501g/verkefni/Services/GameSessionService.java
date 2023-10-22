@@ -9,11 +9,13 @@ public interface GameSessionService {
     GameSession save(GameSession gameSession);
     List<GameSession> findAll();
 
-    long playersJoined(String sessionID);
+    int playersJoined(String sessionID);
 
     GameSession findFirstBySessionID(String sessionID);
 
-    void updateIsStarting(String sessionID);
+    void updateStatus(String sessionID);
 
-    boolean getIsStarting(String sessionID);
+    int getStatus(String sessionID);
+
+    int playersFinishedVoting(String sessionID);
 }

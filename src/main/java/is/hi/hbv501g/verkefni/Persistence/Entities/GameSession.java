@@ -13,16 +13,16 @@ public class GameSession {
 
     private String sessionID;
     private String userID;
-    private Boolean isStarting;
+    private int status;
 
     public GameSession(){
 
     }
 
-    public GameSession(String sessionID, String userID, Boolean isStarting){
+    public GameSession(String sessionID, String userID, int status){
         this.sessionID = sessionID;
         this.userID = userID;
-        this.isStarting = isStarting;
+        this.status = status;
     }
 
     public long getID() {
@@ -49,12 +49,12 @@ public class GameSession {
         this.userID = userID;
     }
 
-    public Boolean getIsStarting() {
-        return isStarting;
+    public int getStatus() {
+        return status;
     }
 
-    public void setIsStarting(Boolean isStarting) {
-        this.isStarting = isStarting;
+    public void setStatus(int status) {
+        this.status = status;
     }
 }
 

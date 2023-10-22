@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
 import jakarta.servlet.http.HttpSession;
 @Controller
 public class UserController {
@@ -48,6 +49,7 @@ public class UserController {
 
         // Annars er user búinn til, vistaður og notandi sendur í login
         user.setIsAdmin(false);
+
         userService.save(user);
         return "redirect:/login";
     }

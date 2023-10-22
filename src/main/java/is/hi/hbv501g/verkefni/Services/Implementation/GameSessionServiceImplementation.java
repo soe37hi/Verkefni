@@ -6,6 +6,7 @@ import is.hi.hbv501g.verkefni.Persistence.Repositories.GameSessionRepository;
 import is.hi.hbv501g.verkefni.Services.GameSessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -37,24 +38,21 @@ public class GameSessionServiceImplementation implements GameSessionService {
         return gameSessionRepository.findFirstBySessionID(sessionID);
     }
 
-    @Override
-    public void updateIsStarting(String sessionID) {
-        List<GameSession> sessionsToUpdate = gameSessionRepository.findAllBySessionID(sessionID);
-
-        for (GameSession sessionToUpdate : sessionsToUpdate) {
-            sessionToUpdate.setIsStarting(Boolean.TRUE);
-            gameSessionRepository.save(sessionToUpdate);
-        }
+    @Transactional
+    public void updateStatus(String sessionID){
+        gameSessionRepository.updateStatus(sessionID);
     }
 
+
     @Override
-    public boolean getIsStarting(String sessionID) {
+    public int getStatus(String sessionID) {
         GameSession gameSession = findFirstBySessionID(sessionID);
-        return (gameSession != null) ? gameSession.getIsStarting() : false;
+        return (gameSession != null) ? gameSession.getStatus() : 0;
     }
 
-    public long playersJoined(String sessionID) {
+    public int playersJoined(String sessionID) {
         return gameSessionRepository.countBySessionID(sessionID);
     }
 
+    public int playersFinishedVoting(String sessionID) { return gameSessionRepository.statusBySessionID(sessionID);}
 }

@@ -13,19 +13,12 @@ Session PIN:
 
 
 <form id="startGameForm" action="/gameHost" method="post">
+    <span>Number of movies:</span>
+    <input type="text" name="numberOfMovies"/>
     <input type="hidden" name="sessionId" th:value="${randomPin}" />
     <button type="submit">Start game</button>
 </form>
 
-
-<!-- Refresh-a síðuna á 3 sek. fresti til að uppfæra fjölda spilara -->
-<script>
-    function refreshPage() {
-        location.reload();
-    }
-
-    setInterval(refreshPage, 3000);
-</script>
 
 </body>
 </html>
