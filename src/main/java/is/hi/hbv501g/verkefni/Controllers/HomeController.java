@@ -1,10 +1,13 @@
 package is.hi.hbv501g.verkefni.Controllers;
 
+import is.hi.hbv501g.verkefni.Persistence.Entities.Movie;
 import is.hi.hbv501g.verkefni.Persistence.Entities.User;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 
 @Controller
 public class HomeController {
@@ -19,5 +22,11 @@ public class HomeController {
 
         return "home";
     }
+
+    @RequestMapping(value = "/addmovie", method = RequestMethod.GET)
+    public String addMovie(Movie movie){
+        return "";
+    }
+
 
 }
