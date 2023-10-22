@@ -14,6 +14,11 @@
 <tr th:each="movie: ${allMovies}">
     <td th:text="${movie.title}"></td>
     <td th:text="${movie.year}"></td>
+    <td>
+        <form th:action="@{'/delete/' + ${movie.ID}}" method="post">
+            <button type="submit">Delete</button>
+        </form>
+    </td>
 </tr>
 </table>
 <hr>

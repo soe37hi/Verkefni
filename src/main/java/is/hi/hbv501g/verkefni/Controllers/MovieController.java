@@ -4,9 +4,7 @@ import is.hi.hbv501g.verkefni.Persistence.Entities.Movie;
 import is.hi.hbv501g.verkefni.Services.MovieService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 
@@ -19,11 +17,10 @@ public class MovieController {
     }
 
     @RequestMapping(value = "/addmovie", method = RequestMethod.POST)
-    public String addMovie(Movie movie, Model model){
+    public String addMovie(Movie movie){
         System.out.println(movie);
         this.movieService.save(movie);
-        model.addAttribute("allMovies", this.movieService.findAll());
-        return "movies";
+        return "redirect:/movies";
 
     }
 
@@ -37,5 +34,11 @@ public class MovieController {
         model.addAttribute("time", LocalDateTime.now());
         model.addAttribute("allMovies", this.movieService.findAll());
         return "movies";
+    }
+
+    @PostMapping("/delete/{movieID}")
+    public String deleteMovie(@PathVariable("movieID") Long movieID) {
+        this.movieService.deleteMovieByID(movieID);
+        return "redirect:/movies";
     }
 }

@@ -6,8 +6,11 @@ import is.hi.hbv501g.verkefni.Persistence.Entities.Movie;
 import java.util.List;
 
 public interface MovieService {
+
+    void deleteMovieByID(Long movieID);
     Movie save(Movie movie);
     List<Movie> findAll();
 
     public List<Movie> getRandomMovies(int n);
 }
+
