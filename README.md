@@ -18,7 +18,7 @@ psql -h localhost -d moviedb -U postgres -f movies.sql
 
 the admin user created has username admin and password admin
 
-Secondly, configure the application.properties file in such a way that the username and password match your own PostgreSQL login
+Secondly, configure the **application.properties** file in such a way that the username and password match your own PostgreSQL login
 like so:
 
 ```
