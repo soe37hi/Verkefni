@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Log in</title>
+    <title>Home</title>
 </head>
 <body>
 
@@ -26,12 +26,6 @@
         <button type="submit">Sign Out</button>
     </form>
 <button onclick="setMoviePreferences()">Set movie preferences</button>
-
-    <div th:if="${user.isAdmin}">
-        <form th:action="@{/CRUD}" method="post">
-            <button type="submit">CRUD</button>
-        </form>
-    </div>
 
 <p>Welcome, <span th:text="${user?.username}"></span>!</p>
 
