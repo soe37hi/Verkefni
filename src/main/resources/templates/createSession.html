@@ -4,9 +4,9 @@
     <title>Log in</title>
 </head>
 <body>
-Session PIN:
 
-<p th:text="${randomPin}"></p>
+
+<p>Session PIN: <span th:text="${randomPin}"></span></p>
 
 
 <p>Players joined: <span th:text="${totalPlayers}"></span></p>
@@ -14,7 +14,7 @@ Session PIN:
 
 <form id="startGameForm" action="/gameHost" method="post">
     <span>Number of movies:</span>
-    <input type="text" name="numberOfMovies"/>
+    <input type="number" name="numberOfMovies" required min="1">
     <input type="hidden" name="sessionId" th:value="${randomPin}" />
     <button type="submit">Start game</button>
 </form>

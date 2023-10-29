@@ -3,14 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Log in</title>
+    <style>
+        /* Define a CSS class to control the image size */
+        .image {
+            max-height: 450px; /* Adjust the width as needed */
+            max-width: 300px; /* Adjust the width as needed */
+        }
+    </style>
 </head>
 <body>
 <div>
-    <img th:src="${game.posterURL}" alt="Your Image">
+    <img class="image" th:src="${game.posterURL}">
 </div>
 
 <div>
-    <p th:text="${game.title + ' (' + game.year + ')' }">Default Text Goes Here</p>
+    <p th:text="${game.title + ' (' + game.year + ')' }"></p>
 </div>
 
 <div>
