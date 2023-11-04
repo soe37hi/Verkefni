@@ -27,6 +27,10 @@
     </form>
 <button onclick="setMoviePreferences()">Set movie preferences</button>
 
+    <form th:action="@{/allUserMovies}" method="post">
+        <button type="submit">Voted movies</button>
+    </form>
+
 <p>Welcome, <span th:text="${user?.username}"></span>!</p>
 
 <!-- Greet our admin -->

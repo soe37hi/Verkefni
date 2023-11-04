@@ -1,6 +1,9 @@
 package is.hi.hbv501g.verkefni.Controllers;
 
 import is.hi.hbv501g.verkefni.Persistence.Entities.Game;
+import is.hi.hbv501g.verkefni.Persistence.Entities.User;
+import is.hi.hbv501g.verkefni.Persistence.Entities.UserMovie;
+import is.hi.hbv501g.verkefni.Persistence.Repositories.UserMovieRepository;
 import is.hi.hbv501g.verkefni.Services.GameService;
 import is.hi.hbv501g.verkefni.Services.GameSessionService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,13 +21,15 @@ import java.util.List;
 
 @Controller
 public class GameController {
+    UserMovieRepository userMovieRepository;
 
     GameService gameService;
 
     GameSessionService gameSessionService;
 
     @Autowired
-    public GameController(GameSessionService gameSessionService, GameService gameService){
+    public GameController(UserMovieRepository userMovieRepository, GameSessionService gameSessionService, GameService gameService){
+        this.userMovieRepository = userMovieRepository;
         this.gameSessionService = gameSessionService;
         this.gameService = gameService;
     }
@@ -33,9 +38,14 @@ public class GameController {
     @RequestMapping("/game")
     public String gamePage(@RequestParam (name = "action", required = false, defaultValue = "no") String action, Model model, HttpSession session) {
         Game previousMovie = (Game) session.getAttribute("game");
+        User user = (User) session.getAttribute("LoggedInUser");
 
         if (action.equals("yes") & previousMovie != null) {
             gameService.increaseVote(previousMovie.getTitle(), previousMovie.getSessionID());
+
+            // Bæta við í UserMovie töfluna
+            UserMovie userMovie = new UserMovie(user.getID(), previousMovie.getMovieID());
+            userMovieRepository.save(userMovie);
         }
 
         String sessionID = (String) session.getAttribute("sessionID");

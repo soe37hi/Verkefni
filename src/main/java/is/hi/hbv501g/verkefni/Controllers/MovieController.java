@@ -1,19 +1,27 @@
 package is.hi.hbv501g.verkefni.Controllers;
 
+import is.hi.hbv501g.verkefni.Persistence.Entities.Game;
 import is.hi.hbv501g.verkefni.Persistence.Entities.Movie;
+import is.hi.hbv501g.verkefni.Persistence.Repositories.UserMovieRepository;
 import is.hi.hbv501g.verkefni.Services.MovieService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import is.hi.hbv501g.verkefni.Persistence.Entities.User;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Controller
 public class MovieController {
     private final MovieService movieService;
+    UserMovieRepository userMovieRepository;
 
-    public MovieController(MovieService movieService) {
+    public MovieController(MovieService movieService, UserMovieRepository userMovieRepository) {
+
         this.movieService = movieService;
+        this.userMovieRepository = userMovieRepository;
     }
 
     @RequestMapping(value = "/addmovie", method = RequestMethod.POST)
@@ -22,6 +30,16 @@ public class MovieController {
         this.movieService.save(movie);
         return "redirect:/movies";
 
+    }
+
+    @RequestMapping(value = "/allUserMovies", method = RequestMethod.POST)
+    public String allUserMovies(HttpSession session, Model model){
+        User user = (User) session.getAttribute("LoggedInUser");
+
+        List<Movie> results = userMovieRepository.findMoviesByUserID(user.getID());
+        model.addAttribute("results", results);
+
+        return "userMovies";
     }
 
     @RequestMapping(value = "/addmovie", method = RequestMethod.GET)

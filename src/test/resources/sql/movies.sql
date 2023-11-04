@@ -1,0 +1,5 @@
+INSERT INTO movies (imageurl, title, year) VALUES ('https://i.etsystatic.com/9116329/r/il/f21280/4204238454/il_fullxfull.4204238454_qx2n.jpg', 'Star Wars',1977);
+INSERT INTO movies (imageurl, title, year) VALUES ('https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQbS_dxjv2hLMwn3ewigU4Ut2lQjuOGBmB8lRkIft0HKJxWnpr9', 'Indiana Jones: Raiders of the Lost Ark',1981);
+INSERT INTO movies (imageurl, title, year) VALUES ('https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_.jpg', 'Inception',2010);
+INSERT INTO movies (imageurl, title, year) VALUES ('https://upload.wikimedia.org/wikipedia/en/2/2c/Kill_Bill_Volume_1.png', 'Kill Bill Volume 1',2003);
+INSERT INTO movies (imageurl, title, year) VALUES ('https://m.media-amazon.com/images/M/MV5BNDE3ODcxYzMtY2YzZC00NmNlLWJiNDMtZDViZWM2MzIxZDYwXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_.jpg', 'The Shawshank Redemption',1994);

@@ -12,6 +12,8 @@ public class Game {
     private long ID;
 
     private String sessionID;
+
+    private long movieID;
     private String title;
     private int year;
 
@@ -22,8 +24,9 @@ public class Game {
 
     }
 
-    public Game(String sessionID, String title, int year, String posterURL, long votes){
+    public Game(String sessionID, long movieID, String title, int year, String posterURL, long votes){
         this.sessionID = sessionID;
+        this.movieID = movieID;
         this.title = title;
         this.year = year;
         this.posterURL = posterURL;
@@ -46,6 +49,13 @@ public class Game {
         this.sessionID = sessionID;
     }
 
+    public long getMovieID() {
+        return movieID;
+    }
+
+    public void setMovieID(long movieID) {
+        this.movieID = movieID;
+    }
     public String getTitle() {
         return title;
     }

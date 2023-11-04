@@ -44,6 +44,7 @@ public class GameServiceImplementation implements GameService {
             Game game = new Game();
             game.setSessionID(sessionId);
             game.setVotes(0);
+            game.setMovieID(movie.getID());
             game.setTitle(movie.getTitle());
             game.setYear(movie.getYear());
             game.setPosterURL(movie.getImageURL());
