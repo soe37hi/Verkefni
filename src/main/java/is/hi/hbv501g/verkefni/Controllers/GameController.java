@@ -44,8 +44,10 @@ public class GameController {
             gameService.increaseVote(previousMovie.getTitle(), previousMovie.getSessionID());
 
             // Bæta við í UserMovie töfluna
-            UserMovie userMovie = new UserMovie(user.getID(), previousMovie.getMovieID());
-            userMovieRepository.save(userMovie);
+            if (user != null) {
+                UserMovie userMovie = new UserMovie(user.getID(), previousMovie.getMovieID());
+                userMovieRepository.save(userMovie);
+            }
         }
 
         String sessionID = (String) session.getAttribute("sessionID");
