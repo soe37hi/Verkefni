@@ -26,5 +26,12 @@ public class MoviesInfo {
         this.overview = overview;
         this.rating = rating;
     }
+
+
+    public int getLength() {return length;}
+
+    public String getOverview() {return overview;}
+
+    public float getRating() {return rating;}
 }
 

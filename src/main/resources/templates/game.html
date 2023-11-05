@@ -10,6 +10,7 @@
             max-width: 300px; /* Adjust the width as needed */
         }
     </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 <div>
@@ -28,5 +29,31 @@
         <button type="submit" name="action" value="yes">Yes</button>
     </form>
 </div>
+
+
+<form id="movieInfoForm" method="post">
+    <button type="button" id="loadMovieInfo" data-movieid="${game.movieID}">More Info</button>
+</form>
+
+<p id="overview"></p>
+<p id="length"></p>
+<p id="rating"></p>
+
+<script th:inline="javascript">
+    $(document).ready(function () {
+        $('#loadMovieInfo').click(function (event) {
+            event.preventDefault();
+
+            var movieID = /*[[${game.movieID}]]*/ '2';
+            $.post('/getMovieInfo', { movieID: movieID }, function (data) {
+                console.log(Object.keys(data));
+                $('#overview').text('Overview: ' + data.overview);
+                $('#length').text('Length: ' + data.length + ' min.');
+                $('#rating').text('Rating: ' + data.rating);
+            });
+        });
+    });
+</script>
+
 </body>
 </html>

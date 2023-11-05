@@ -3,6 +3,9 @@ package is.hi.hbv501g.verkefni.Controllers;
 import is.hi.hbv501g.verkefni.Persistence.Entities.Game;
 import is.hi.hbv501g.verkefni.Persistence.Entities.User;
 import is.hi.hbv501g.verkefni.Persistence.Entities.UserMovie;
+import is.hi.hbv501g.verkefni.Persistence.Entities.MoviesInfo;
+import is.hi.hbv501g.verkefni.Persistence.Repositories.GameRepository;
+import is.hi.hbv501g.verkefni.Persistence.Repositories.MoviesInfoRepository;
 import is.hi.hbv501g.verkefni.Persistence.Repositories.UserMovieRepository;
 import is.hi.hbv501g.verkefni.Services.GameService;
 import is.hi.hbv501g.verkefni.Services.GameSessionService;
@@ -14,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -23,15 +27,22 @@ import java.util.List;
 public class GameController {
     UserMovieRepository userMovieRepository;
 
+    GameRepository gameRepository;
+
     GameService gameService;
 
     GameSessionService gameSessionService;
 
+    MoviesInfoRepository moviesInfoRepository;
+
+
     @Autowired
-    public GameController(UserMovieRepository userMovieRepository, GameSessionService gameSessionService, GameService gameService){
+    public GameController(UserMovieRepository userMovieRepository, GameSessionService gameSessionService, GameService gameService, GameRepository gameRepository, MoviesInfoRepository moviesInfoRepository){
         this.userMovieRepository = userMovieRepository;
         this.gameSessionService = gameSessionService;
         this.gameService = gameService;
+        this.gameRepository = gameRepository;
+        this.moviesInfoRepository = moviesInfoRepository;
     }
 
 
@@ -97,4 +108,10 @@ public class GameController {
     }
 
 
+
+    @RequestMapping(value = "/getMovieInfo", method = RequestMethod.POST)
+    @ResponseBody
+    public MoviesInfo getMovieInfo(@RequestParam("movieID") long movieID, Model model) {
+        return moviesInfoRepository.findMoviesInfoByID(movieID);
+    }
 }
