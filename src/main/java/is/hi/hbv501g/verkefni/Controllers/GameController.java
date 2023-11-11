@@ -6,6 +6,9 @@ import is.hi.hbv501g.verkefni.Persistence.Entities.UserMovie;
 import is.hi.hbv501g.verkefni.Persistence.Entities.MoviesInfo;
 import is.hi.hbv501g.verkefni.Persistence.Repositories.GameRepository;
 import is.hi.hbv501g.verkefni.Persistence.Repositories.MoviesInfoRepository;
+import is.hi.hbv501g.verkefni.Persistence.Repositories.GenreRepository;
+import is.hi.hbv501g.verkefni.Persistence.Repositories.ActorRepository;
+import is.hi.hbv501g.verkefni.Persistence.Repositories.DirectorRepository;
 import is.hi.hbv501g.verkefni.Persistence.Repositories.UserMovieRepository;
 import is.hi.hbv501g.verkefni.Services.GameService;
 import is.hi.hbv501g.verkefni.Services.GameSessionService;
@@ -20,7 +23,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -35,14 +40,23 @@ public class GameController {
 
     MoviesInfoRepository moviesInfoRepository;
 
+    GenreRepository genreRepository;
+    DirectorRepository directorRepository;
+    ActorRepository actorRepository;
+
 
     @Autowired
-    public GameController(UserMovieRepository userMovieRepository, GameSessionService gameSessionService, GameService gameService, GameRepository gameRepository, MoviesInfoRepository moviesInfoRepository){
+    public GameController(UserMovieRepository userMovieRepository, GameSessionService gameSessionService,
+                          GameService gameService, GameRepository gameRepository, MoviesInfoRepository moviesInfoRepository,
+                          GenreRepository genreRepository, DirectorRepository directorRepository, ActorRepository actorRepository){
         this.userMovieRepository = userMovieRepository;
         this.gameSessionService = gameSessionService;
         this.gameService = gameService;
         this.gameRepository = gameRepository;
         this.moviesInfoRepository = moviesInfoRepository;
+        this.genreRepository = genreRepository;
+        this.directorRepository = directorRepository;
+        this.actorRepository = actorRepository;
     }
 
 
@@ -111,7 +125,20 @@ public class GameController {
 
     @RequestMapping(value = "/getMovieInfo", method = RequestMethod.POST)
     @ResponseBody
-    public MoviesInfo getMovieInfo(@RequestParam("movieID") long movieID, Model model) {
-        return moviesInfoRepository.findMoviesInfoByID(movieID);
+    public Map<String, Object> getMovieInfo(@RequestParam("movieID") long movieID, Model model) {
+        MoviesInfo moviesInfo = moviesInfoRepository.findMoviesInfoByID(movieID);
+        List<String> genres = genreRepository.findGenresByMovieID(movieID);
+        List<String> directors = directorRepository.findDirectorsByMovieID(movieID);
+        List<String> actors = actorRepository.findActorsByMovieID(movieID);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("overview", moviesInfo.getOverview());
+        response.put("length", moviesInfo.getLength());
+        response.put("rating", moviesInfo.getRating());
+        response.put("genres", genres);
+        response.put("directors", directors);
+        response.put("actors", actors);
+
+        return response;
     }
 }

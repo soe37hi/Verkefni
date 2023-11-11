@@ -38,18 +38,24 @@
 <p id="overview"></p>
 <p id="length"></p>
 <p id="rating"></p>
+<p id="genres"></p>
+<p id="director"></p>
+<p id="actors"></p>
 
 <script th:inline="javascript">
     $(document).ready(function () {
         $('#loadMovieInfo').click(function (event) {
             event.preventDefault();
 
-            var movieID = /*[[${game.movieID}]]*/ '2';
+            var movieID = /*[[${game.movieID}]]*/ '0';
             $.post('/getMovieInfo', { movieID: movieID }, function (data) {
                 console.log(Object.keys(data));
                 $('#overview').text('Overview: ' + data.overview);
                 $('#length').text('Length: ' + data.length + ' min.');
                 $('#rating').text('Rating: ' + data.rating);
+                $('#genres').text('Genres: ' + data.genres.join(', '));
+                $('#director').text('Director: ' + data.directors.join(', '));
+                $('#actors').text('Actors: ' + data.actors.join(', '));
             });
         });
     });

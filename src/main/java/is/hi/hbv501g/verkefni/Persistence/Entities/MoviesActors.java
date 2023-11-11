@@ -2,35 +2,26 @@ package is.hi.hbv501g.verkefni.Persistence.Entities;
 
 import jakarta.persistence.*;
 
-import java.io.Serializable;
-
 @Entity
 @Table(name="moviesActors")
 
 public class MoviesActors {
 
-    @Embeddable
-    public static class MoviesActorsId implements Serializable {
-        private long movieID;
-        private long actorID;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long ID;
 
-        public MoviesActorsId() {}
+    private long movieID;
 
-        public MoviesActorsId(long movieID, long actorID) {
-            this.movieID = movieID;
-            this.actorID = actorID;
-        }
-    }
-
-    @EmbeddedId
-    private MoviesActors.MoviesActorsId id;
+    private long actorID;
 
     public MoviesActors(){
 
     }
 
-    public MoviesActors(long movieID, long actorID) {
-        this.id = new MoviesActorsId(movieID, actorID);
+    public MoviesActors(long movieID, long actorID){
+        this.movieID = movieID;
+        this.actorID = actorID;
     }
 }
 
