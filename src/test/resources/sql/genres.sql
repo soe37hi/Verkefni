@@ -1,0 +1,20 @@
+INSERT INTO genres (ID, genre)
+VALUES
+    (1,'Action'),
+    (2,'Adventure'),
+    (3,'Animation'),
+    (4,'Comedy'),
+    (5,'Crime'),
+    (6,'Drama'),
+    (7,'Family'),
+    (8,'Fantasy'),
+    (9,'History'),
+    (10,'Horror'),
+    (11,'Music'),
+    (12,'Mystery'),
+    (13,'Romance'),
+    (14,'Science Fiction'),
+    (15,'Thriller'),
+    (16,'TV Movie'),
+    (17,'War'),
+    (18,'Western')

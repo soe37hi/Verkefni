@@ -13,15 +13,15 @@ public class MoviesGenres {
 
     private long movieID;
 
-    private String genre;
+    private long genreID;
 
     public MoviesGenres(){
 
     }
 
-    public MoviesGenres(long movieID, String genre){
+    public MoviesGenres(long movieID, long genreID){
         this.movieID = movieID;
-        this.genre = genre;
+        this.genreID = genreID;
     }
 }
 
