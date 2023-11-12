@@ -23,5 +23,8 @@ public class Actor {
 
     public String getActor() {return actor;}
 
+    public long getID() {
+        return ID;
+    }
 }
 

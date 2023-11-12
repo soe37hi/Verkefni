@@ -29,6 +29,15 @@
                 </li>
             </ul>
         </div>
+        <div style="flex:1">
+            <h3>Actors</h3>
+            <ul style="height: 500px;overflow-y:scroll;list-style-type:none">
+                <li th:each="actor : ${actors}">
+                    <input type="checkbox" name="selectedActors" th:value="${actor.ID}" th:checked="${userActorIDs.contains(actor.ID)}"/>
+                    <span th:text="${actor.actor}"></span>
+                </li>
+            </ul>
+        </div>
     </div>
 
 
