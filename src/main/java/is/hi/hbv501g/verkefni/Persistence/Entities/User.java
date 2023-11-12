@@ -18,7 +18,6 @@ public class User {
 
     private Boolean isAdmin;
 
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_likes_genre",
@@ -28,15 +27,26 @@ public class User {
     )
     private List<Genre> preferredGenres;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_likes_director",
+            joinColumns = @JoinColumn(name = "userID"),
+            inverseJoinColumns = @JoinColumn(name = "directorID")
+
+    )
+    private List<Director> preferredDirectors;
+
+
     public User(){
 
     }
 
-    public User(String userName, String password, Boolean isAdmin, List<Genre> preferredGenres){
+    public User(String userName, String password, Boolean isAdmin, List<Genre> preferredGenres, List<Director> preferredDirectors){
         this.username = userName;
         this.password = password;
         this.isAdmin = isAdmin;
         this.preferredGenres = preferredGenres;
+        this.preferredDirectors = preferredDirectors;
     }
 
     public long getID() {
@@ -74,5 +84,11 @@ public class User {
     public List<Genre> getPreferredGenres() {return preferredGenres;}
 
     public void setPreferredGenres(List<Genre> preferredGenres) {this.preferredGenres = preferredGenres;}
+
+    public List<Director> getPreferredDirectors() {return preferredDirectors;}
+
+    public void setPreferredDirectors(List<Director> preferredDirectors) {this.preferredDirectors = preferredDirectors;}
+
+
 }
 

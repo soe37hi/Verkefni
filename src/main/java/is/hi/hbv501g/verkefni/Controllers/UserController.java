@@ -1,7 +1,9 @@
 package is.hi.hbv501g.verkefni.Controllers;
 
+import is.hi.hbv501g.verkefni.Persistence.Entities.Director;
 import is.hi.hbv501g.verkefni.Persistence.Entities.Genre;
 import is.hi.hbv501g.verkefni.Persistence.Entities.User;
+import is.hi.hbv501g.verkefni.Services.DirectorService;
 import is.hi.hbv501g.verkefni.Services.GenreService;
 import is.hi.hbv501g.verkefni.Services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,12 +28,14 @@ public class UserController {
 
     UserService userService;
     GenreService genreService;
+    DirectorService directorService;
 
     @Autowired
-    public UserController(UserService userService,GenreService genreService){
+    public UserController(UserService userService,GenreService genreService,DirectorService directorService){
 
         this.userService = userService;
         this.genreService = genreService;
+        this.directorService = directorService;
     }
 
 
@@ -110,27 +114,37 @@ public class UserController {
 
             List<Long> userGenreID = loggedInUser.getPreferredGenres().stream().map(Genre::getID).toList();
             model.addAttribute("userGenreIDs",userGenreID);
+
+            List<Long> userDirectorID = loggedInUser.getPreferredDirectors().stream().map(Director::getID).toList();
+            model.addAttribute("userDirectorIDs",userDirectorID);
         }
 
         model.addAttribute("genres",this.genreService.findAll());
+        model.addAttribute("directors",this.directorService.findAll());
         return "setMoviePreferences";
     }
 
     @RequestMapping(value = "/submitGenres", method = RequestMethod.POST)
-    public String submitGenresPOST(@RequestParam(value = "selectedGenres", required = false)List<Long> selectedGenres,  HttpSession session) {
-        System.out.println(selectedGenres);
-        List<Genre> collected = genreService.findAll().stream().filter(genre -> {
-            return selectedGenres.contains(genre.getID());
+    public String submitGenresPOST(@RequestParam(value = "selectedGenres", required = false)List<Long> selectedGenres,
+                                   @RequestParam (value = "selectedDirectors", required = false) List<Long> selectedDirectors , HttpSession session) {
 
+        //
+        List<Genre> collectedGenres = genreService.findAll().stream().filter(genre -> {
+            return selectedGenres.contains(genre.getID());
         }).toList();
 
+        List<Director> collectedDirectors = directorService.findAll().stream().filter(director -> {
+            return selectedDirectors.contains(director.getID());
+        }).toList();
+
+        //Get the current user and save with new values
         User loggedInUser = (User) session.getAttribute("LoggedInUser");
-        loggedInUser.setPreferredGenres(collected);
+
+        loggedInUser.setPreferredGenres(collectedGenres);
+        loggedInUser.setPreferredDirectors(collectedDirectors);
         this.userService.save(loggedInUser);
-
-
-
-
         return "redirect:/";
     }
+
+
 }
