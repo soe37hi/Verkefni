@@ -1,15 +1,16 @@
 package is.hi.hbv501g.verkefni.Controllers;
 
-import is.hi.hbv501g.verkefni.Persistence.Entities.Movie;
+import is.hi.hbv501g.verkefni.Persistence.Entities.*;
 import is.hi.hbv501g.verkefni.Persistence.Repositories.UserMovieRepository;
 import is.hi.hbv501g.verkefni.Services.MovieService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import is.hi.hbv501g.verkefni.Persistence.Entities.User;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -40,6 +41,48 @@ public class MovieController {
         model.addAttribute("results", results);
 
         return "userMovies";
+    }
+
+
+    @RequestMapping(value = "/preferenceMovies", method = RequestMethod.POST)
+    public String preferenceMovies(HttpSession session, Model model){
+        User user = (User) session.getAttribute("LoggedInUser");
+
+        // Genres
+        List<Genre> genreList = user.getPreferredGenres();
+
+        List<Long> genreIds = new ArrayList<>();
+
+        for (Genre genre : genreList) {
+            genreIds.add(genre.getID());
+        }
+
+
+        // Actors
+        List<Actor> actorList = user.getPreferredActors();
+
+        List<Long> actorIds = new ArrayList<>();
+
+        for (Actor actor : actorList) {
+            actorIds.add(actor.getID());
+        }
+
+
+        // Directors
+        List<Director> directorList = user.getPreferredDirectors();
+
+        List<Long> directorIds = new ArrayList<>();
+
+        for (Director director : directorList) {
+            directorIds.add(director.getID());
+        }
+
+
+        List<Movie> results =
+                userMovieRepository.findMoviesByPreference(genreIds,actorIds,directorIds);
+        model.addAttribute("results", results);
+
+        return "preferenceMovies";
     }
 
     @RequestMapping(value = "/addmovie", method = RequestMethod.GET)
