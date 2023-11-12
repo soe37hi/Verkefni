@@ -3,18 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>User Movies</title>
+    <style>
+        /* Define a CSS class to control the image size */
+        .table-image {
+            max-width: 100px; /* Adjust the width as needed */
+            max-height: 100px; /* Adjust the height as needed */
+        }
+    </style>
 </head>
 <body>
+
 <h1>User movies</h1>
 
 <table>
-    <tbody>
-
-    <tr th:each="result : ${results}">
-        <td th:text="${result.title} + ' (' + ${result.year} + ')'"></td>
-
+    <tr th:each="movie : ${results}">
+        <td th:text="${movie.title} + ' (' + ${movie.year} + ')'"></td>
+        <td> <img  class="table-image" alt="movieposter" th:src="${movie.imageURL}"></td>
     </tr>
-    </tbody>
 </table>
+
 </body>
 </html>

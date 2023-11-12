@@ -16,9 +16,14 @@
     <span>Number of movies:</span>
     <input type="number" name="numberOfMovies" required min="1" max="100">
     <input type="hidden" name="sessionId" th:value="${randomPin}" />
+
+    <div th:if="${user != null}">
+        <span>Use my movie preferences:</span>
+        <input type="checkbox" name="useMoviePreferences" value="true">
+    </div>
+
     <button type="submit">Start game</button>
 </form>
-
 
 </body>
 </html>

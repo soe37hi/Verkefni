@@ -20,8 +20,7 @@
 <h1>All Movies</h1>
 <table>
 <tr th:each="movie: ${allMovies}">
-    <td th:text="${movie.title}"></td>
-    <td th:text="${movie.year}"></td>
+    <td th:text="${movie.title} + ' (' + ${movie.year} + ')'"></td>
     <td> <img  class="table-image" alt="movieposter" th:src="${movie.imageURL}"></td>
     <td>
         <form th:action="@{'/delete/' + ${movie.ID}}" method="post">

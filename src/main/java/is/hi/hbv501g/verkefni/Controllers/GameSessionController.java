@@ -1,6 +1,7 @@
 package is.hi.hbv501g.verkefni.Controllers;
 
 import is.hi.hbv501g.verkefni.Persistence.Entities.GameSession;
+import is.hi.hbv501g.verkefni.Persistence.Entities.User;
 import is.hi.hbv501g.verkefni.Services.GameSessionService;
 import is.hi.hbv501g.verkefni.Persistence.Entities.Game;
 import is.hi.hbv501g.verkefni.Services.GameService;
@@ -59,6 +60,11 @@ public class GameSessionController {
 
         model.addAttribute("randomPin", randomPin);
         model.addAttribute("totalPlayers", playersJoined);
+
+        if (session.getAttribute("LoggedInUser") != null) {
+            User loggedInUser = (User) session.getAttribute("LoggedInUser");
+            model.addAttribute("user", loggedInUser);
+        }
 
         return "createSession";
     }
@@ -126,7 +132,11 @@ public class GameSessionController {
 
     // Hvað gerist þegar host ýtir á start game:
     @RequestMapping("/gameHost")
-    public String gameHostPage(@RequestParam("sessionId") String sessionId, @RequestParam("numberOfMovies") int numberOfMovies, Model model, HttpSession session) {
+    public String gameHostPage(@RequestParam("sessionId") String sessionId,
+                               @RequestParam("numberOfMovies") int numberOfMovies,
+                               @RequestParam(value = "useMoviePreferences", defaultValue = "false")
+                                   boolean useMoviePreferences,
+                               Model model, HttpSession session) {
 
         // Gildið á isStarting er uppfært (breytist úr 0 í 1)
         // og host er sendur í leik
@@ -134,10 +144,18 @@ public class GameSessionController {
         // og ef hún er 1 þá eru þeir sendir í leik [sjá joinedSession])
         gameSessionService.updateStatus(sessionId);
 
-        gameService.addMoviesToGame(numberOfMovies,sessionId);
+        if (!useMoviePreferences) {
+            gameService.addMoviesToGame(numberOfMovies, sessionId);
+        }
+        else {
+            // Þarf að breyta
+            gameService.addMoviesToGame(0, sessionId);
+        }
 
         session.setAttribute("sessionID", sessionId);
         session.setAttribute("firstMovie", Boolean.TRUE);
+
+        System.out.println(useMoviePreferences);
 
         return "redirect:/game";
     }
