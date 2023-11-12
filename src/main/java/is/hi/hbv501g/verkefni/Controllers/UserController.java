@@ -1,7 +1,11 @@
 package is.hi.hbv501g.verkefni.Controllers;
 
+import is.hi.hbv501g.verkefni.Persistence.Entities.Actor;
+import is.hi.hbv501g.verkefni.Persistence.Entities.Director;
 import is.hi.hbv501g.verkefni.Persistence.Entities.Genre;
 import is.hi.hbv501g.verkefni.Persistence.Entities.User;
+import is.hi.hbv501g.verkefni.Services.ActorService;
+import is.hi.hbv501g.verkefni.Services.DirectorService;
 import is.hi.hbv501g.verkefni.Services.GenreService;
 import is.hi.hbv501g.verkefni.Services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,12 +30,18 @@ public class UserController {
 
     UserService userService;
     GenreService genreService;
+    DirectorService directorService;
+
+    ActorService actorService;
+
 
     @Autowired
-    public UserController(UserService userService,GenreService genreService){
+    public UserController(UserService userService,GenreService genreService,DirectorService directorService, ActorService actorService){
 
         this.userService = userService;
         this.genreService = genreService;
+        this.directorService = directorService;
+        this.actorService = actorService;
     }
 
 
@@ -110,27 +120,50 @@ public class UserController {
 
             List<Long> userGenreID = loggedInUser.getPreferredGenres().stream().map(Genre::getID).toList();
             model.addAttribute("userGenreIDs",userGenreID);
+
+            List<Long> userDirectorID = loggedInUser.getPreferredDirectors().stream().map(Director::getID).toList();
+            model.addAttribute("userDirectorIDs",userDirectorID);
+
+            List<Long> userActorID = loggedInUser.getPreferredActors().stream().map(Actor::getID).toList();
+            model.addAttribute("userActorIDs",userActorID);
         }
 
         model.addAttribute("genres",this.genreService.findAll());
+        model.addAttribute("directors",this.directorService.findAll());
+        model.addAttribute("actors",this.actorService.findAll());
         return "setMoviePreferences";
     }
 
     @RequestMapping(value = "/submitGenres", method = RequestMethod.POST)
-    public String submitGenresPOST(@RequestParam(value = "selectedGenres", required = false)List<Long> selectedGenres,  HttpSession session) {
-        System.out.println(selectedGenres);
-        List<Genre> collected = genreService.findAll().stream().filter(genre -> {
-            return selectedGenres.contains(genre.getID());
+    public String submitGenresPOST(@RequestParam(value = "selectedGenres", required = false)List<Long> selectedGenres,
+                                   @RequestParam (value = "selectedDirectors", required = false) List<Long> selectedDirectors,
+                                   @RequestParam (value = "selectedActors", required = false) List<Long> selectedActors, HttpSession session) {
 
+        //Collect the genres
+        List<Genre> collectedGenres = genreService.findAll().stream().filter(genre -> {
+            return selectedGenres.contains(genre.getID());
         }).toList();
 
+        //Collect the Directors
+        List<Director> collectedDirectors = directorService.findAll().stream().filter(director -> {
+            return selectedDirectors.contains(director.getID());
+        }).toList();
+
+        //Collect the actors
+        List<Actor> collectedActors = actorService.findAll().stream().filter(actor -> {
+            return selectedActors.contains(actor.getID());
+        }).toList();
+
+        //Get the current user and save with new values
         User loggedInUser = (User) session.getAttribute("LoggedInUser");
-        loggedInUser.setPreferredGenres(collected);
+
+        //Set the user preferences settings
+        loggedInUser.setPreferredGenres(collectedGenres);
+        loggedInUser.setPreferredDirectors(collectedDirectors);
+        loggedInUser.setPreferredActors(collectedActors);
         this.userService.save(loggedInUser);
-
-
-
-
         return "redirect:/";
     }
+
+
 }

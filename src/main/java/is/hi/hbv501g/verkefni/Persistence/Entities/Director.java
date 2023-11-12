@@ -23,5 +23,8 @@ public class Director {
 
     public String getDirector() {return director;}
 
+    public long getID() {
+        return ID;
+    }
 }
 

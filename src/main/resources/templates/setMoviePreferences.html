@@ -8,15 +8,39 @@
 <p>Movie preferences</p>
 
 <p>Welcome, <span th:text="${user?.username}"></span>!</p>
-<h1>List of Genres</h1>
 
 <form action="/submitGenres" method="post">
-<ul>
-    <li th:each="genre : ${genres}">
-        <input type="checkbox" name="selectedGenres" th:value="${genre.ID}" th:checked="${userGenreIDs.contains(genre.ID)}"/>
-        <span th:text="${genre.genre}"></span>
-    </li>
-</ul>
+    <div style="display: flex">
+        <div style="flex:1">
+            <h3>Genres</h3>
+            <ul style="height: 500px;overflow-y:scroll;list-style-type: none;">
+                <li th:each="genre : ${genres}">
+                    <input type="checkbox" name="selectedGenres" th:value="${genre.ID}" th:checked="${userGenreIDs.contains(genre.ID)}"/>
+                    <span th:text="${genre.genre}"></span>
+                </li>
+            </ul>
+        </div>
+        <div style="flex:1">
+        <h3>Directors</h3>
+            <ul style="height: 500px;overflow-y:scroll;list-style-type:none">
+                <li th:each="director : ${directors}">
+                    <input type="checkbox" name="selectedDirectors" th:value="${director.ID}" th:checked="${userDirectorIDs.contains(director.ID)}"/>
+                    <span th:text="${director.director}"></span>
+                </li>
+            </ul>
+        </div>
+        <div style="flex:1">
+            <h3>Actors</h3>
+            <ul style="height: 500px;overflow-y:scroll;list-style-type:none">
+                <li th:each="actor : ${actors}">
+                    <input type="checkbox" name="selectedActors" th:value="${actor.ID}" th:checked="${userActorIDs.contains(actor.ID)}"/>
+                    <span th:text="${actor.actor}"></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
 
 <button type="submit">Submit</button>
 </form>
