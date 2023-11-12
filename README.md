@@ -3,7 +3,7 @@
 ## Skil 4
 
 
-The application should be ready to run immediately, just make sure the application.properties file includes this
+The application should be ready to run immediately, just make sure the application.properties file includes this as it is not running on Render
 
 ```
 spring.jpa.hibernate.ddl-auto=update
