@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 
 public class Genre {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
@@ -22,6 +23,10 @@ public class Genre {
     }
 
     public String getGenre() {return genre;}
+
+    public long getID() {
+        return ID;
+    }
 
 }
 

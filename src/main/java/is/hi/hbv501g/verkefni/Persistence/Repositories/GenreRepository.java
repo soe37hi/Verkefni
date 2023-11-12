@@ -8,8 +8,14 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface GenreRepository extends JpaRepository<Genre, Long> {
+import org.springframework.stereotype.Repository;
 
+import java.util.function.LongConsumer;
+@Repository
+public interface GenreRepository extends JpaRepository<Genre, Long> {
+  
     @Query("SELECT g.genre FROM Genre g JOIN MoviesGenres mg ON g.ID = mg.genreID WHERE mg.movieID = :movieID")
     List<String> findGenresByMovieID(@Param("movieID") long movieID);
+
 }
+

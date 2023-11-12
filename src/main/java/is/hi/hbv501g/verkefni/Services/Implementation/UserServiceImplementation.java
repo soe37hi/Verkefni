@@ -23,8 +23,11 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public User save(User user){
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
+        User existingUser = userRepository.findByUsername(user.getUsername());
+        if (existingUser == null || existingUser.getPassword().equals(user.getPassword())) {
+            String encodedPassword = passwordEncoder.encode(user.getPassword());
+            user.setPassword(encodedPassword);
+        }
         return userRepository.save(user);
     }
 

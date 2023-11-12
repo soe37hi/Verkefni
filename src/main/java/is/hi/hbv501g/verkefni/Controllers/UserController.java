@@ -1,27 +1,37 @@
 package is.hi.hbv501g.verkefni.Controllers;
 
+import is.hi.hbv501g.verkefni.Persistence.Entities.Genre;
 import is.hi.hbv501g.verkefni.Persistence.Entities.User;
+import is.hi.hbv501g.verkefni.Services.GenreService;
 import is.hi.hbv501g.verkefni.Services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import jakarta.servlet.http.HttpSession;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Controller
 public class UserController {
 
     UserService userService;
+    GenreService genreService;
 
     @Autowired
-    public UserController(UserService userService){
+    public UserController(UserService userService,GenreService genreService){
 
         this.userService = userService;
+        this.genreService = genreService;
     }
 
 
@@ -93,8 +103,34 @@ public class UserController {
     }
 
     @RequestMapping(value = "/setMoviePreferences", method = RequestMethod.GET)
-    public String setMoviePreferencesGET(){
+    public String setMoviePreferencesGET(Model model, HttpSession session){
+        if (session.getAttribute("LoggedInUser") != null) {
+            User loggedInUser = (User) session.getAttribute("LoggedInUser");
+            model.addAttribute("user", loggedInUser);
 
+            List<Long> userGenreID = loggedInUser.getPreferredGenres().stream().map(Genre::getID).toList();
+            model.addAttribute("userGenreIDs",userGenreID);
+        }
+
+        model.addAttribute("genres",this.genreService.findAll());
         return "setMoviePreferences";
+    }
+
+    @RequestMapping(value = "/submitGenres", method = RequestMethod.POST)
+    public String submitGenresPOST(@RequestParam(value = "selectedGenres", required = false)List<Long> selectedGenres,  HttpSession session) {
+        System.out.println(selectedGenres);
+        List<Genre> collected = genreService.findAll().stream().filter(genre -> {
+            return selectedGenres.contains(genre.getID());
+
+        }).toList();
+
+        User loggedInUser = (User) session.getAttribute("LoggedInUser");
+        loggedInUser.setPreferredGenres(collected);
+        this.userService.save(loggedInUser);
+
+
+
+
+        return "redirect:/";
     }
 }
