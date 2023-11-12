@@ -1,6 +1,5 @@
 package is.hi.hbv501g.verkefni.Controllers;
 
-import is.hi.hbv501g.verkefni.Persistence.Entities.Game;
 import is.hi.hbv501g.verkefni.Persistence.Entities.Movie;
 import is.hi.hbv501g.verkefni.Persistence.Repositories.UserMovieRepository;
 import is.hi.hbv501g.verkefni.Services.MovieService;
@@ -17,6 +16,7 @@ import java.util.List;
 public class MovieController {
     private final MovieService movieService;
     UserMovieRepository userMovieRepository;
+
 
     public MovieController(MovieService movieService, UserMovieRepository userMovieRepository) {
 

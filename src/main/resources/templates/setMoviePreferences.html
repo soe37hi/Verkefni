@@ -7,5 +7,20 @@
 
 <p>Movie preferences</p>
 
+<p>Welcome, <span th:text="${user?.username}"></span>!</p>
+<h1>List of Genres</h1>
+
+<form action="/submitGenres" method="post">
+<ul>
+    <li th:each="genre : ${genres}">
+        <input type="checkbox" name="selectedGenres" th:value="${genre.ID}" th:checked="${userGenreIDs.contains(genre.ID)}"/>
+        <span th:text="${genre.genre}"></span>
+    </li>
+</ul>
+
+<button type="submit">Submit</button>
+</form>
+
+
 </body>
 </html>

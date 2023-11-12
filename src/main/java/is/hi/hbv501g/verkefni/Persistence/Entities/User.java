@@ -2,6 +2,8 @@ package is.hi.hbv501g.verkefni.Persistence.Entities;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name="users")
 
@@ -16,14 +18,25 @@ public class User {
 
     private Boolean isAdmin;
 
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_likes_genre",
+            joinColumns = @JoinColumn(name = "userID"),
+            inverseJoinColumns = @JoinColumn(name = "genreID")
+
+    )
+    private List<Genre> preferredGenres;
+
     public User(){
 
     }
 
-    public User(String userName, String password, Boolean isAdmin){
+    public User(String userName, String password, Boolean isAdmin, List<Genre> preferredGenres){
         this.username = userName;
         this.password = password;
         this.isAdmin = isAdmin;
+        this.preferredGenres = preferredGenres;
     }
 
     public long getID() {
@@ -57,5 +70,9 @@ public class User {
     public void setIsAdmin(Boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
+
+    public List<Genre> getPreferredGenres() {return preferredGenres;}
+
+    public void setPreferredGenres(List<Genre> preferredGenres) {this.preferredGenres = preferredGenres;}
 }
 
