@@ -123,6 +123,7 @@ public class GameController {
 
 
 
+    // Til að fá meiri upplýsingar um ákveðna mynd, þ.e. þegar ýtt er á takann "More details"
     @RequestMapping(value = "/getMovieInfo", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> getMovieInfo(@RequestParam("movieID") long movieID, Model model) {
