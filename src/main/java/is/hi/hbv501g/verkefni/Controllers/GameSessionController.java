@@ -1,9 +1,7 @@
 package is.hi.hbv501g.verkefni.Controllers;
 
-import is.hi.hbv501g.verkefni.Persistence.Entities.GameSession;
-import is.hi.hbv501g.verkefni.Persistence.Entities.User;
+import is.hi.hbv501g.verkefni.Persistence.Entities.*;
 import is.hi.hbv501g.verkefni.Services.GameSessionService;
-import is.hi.hbv501g.verkefni.Persistence.Entities.Game;
 import is.hi.hbv501g.verkefni.Services.GameService;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -148,8 +147,61 @@ public class GameSessionController {
             gameService.addMoviesToGame(numberOfMovies, sessionId);
         }
         else {
-            // Þarf að breyta
-            gameService.addMoviesToGame(0, sessionId);
+            User user = (User) session.getAttribute("LoggedInUser");
+
+            // Genres
+            List<Genre> genreList = user.getPreferredGenres();
+
+            List<Long> genreIds = new ArrayList<>();
+
+            for (Genre genre : genreList) {
+                genreIds.add(genre.getID());
+            }
+
+
+            // Actors
+            List<Actor> actorList = user.getPreferredActors();
+
+            List<Long> actorIds = new ArrayList<>();
+
+            for (Actor actor : actorList) {
+                actorIds.add(actor.getID());
+            }
+
+
+            // Directors
+            List<Director> directorList = user.getPreferredDirectors();
+
+            List<Long> directorIds = new ArrayList<>();
+
+            for (Director director : directorList) {
+                directorIds.add(director.getID());
+            }
+
+
+            String genresEmpty = "FALSE";
+
+            if (genreIds.isEmpty()) {
+                genresEmpty = null;
+            }
+
+
+            String actorsEmpty = "FALSE";
+
+            if (actorIds.isEmpty()) {
+                actorsEmpty = null;
+            }
+
+
+            String directorsEmpty = "FALSE";
+
+            if (directorIds.isEmpty()) {
+                directorsEmpty = null;
+            }
+
+            gameService.addPreferenceMoviesToGame(numberOfMovies, sessionId,
+                    genreIds,actorIds,directorIds,
+                    genresEmpty,actorsEmpty,directorsEmpty);
         }
 
         session.setAttribute("sessionID", sessionId);

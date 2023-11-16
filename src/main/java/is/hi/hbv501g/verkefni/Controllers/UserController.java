@@ -22,6 +22,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpSession;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -128,9 +131,18 @@ public class UserController {
             model.addAttribute("userActorIDs",userActorID);
         }
 
-        model.addAttribute("genres",this.genreService.findAll());
-        model.addAttribute("directors",this.directorService.findAll());
-        model.addAttribute("actors",this.actorService.findAll());
+        List<Genre> sortedGenres = genreService.findAll();
+        Collections.sort(sortedGenres, Comparator.comparing(Genre::getGenre));
+        model.addAttribute("genres", sortedGenres);
+
+        List<Director> sortedDirectors = directorService.findAll();
+        Collections.sort(sortedDirectors, Comparator.comparing(Director::getDirector));
+        model.addAttribute("directors", sortedDirectors);
+
+        List<Actor> sortedActors = actorService.findAll();
+        Collections.sort(sortedActors, Comparator.comparing(Actor::getActor));
+        model.addAttribute("actors", sortedActors);
+
         return "setMoviePreferences";
     }
 
@@ -140,19 +152,28 @@ public class UserController {
                                    @RequestParam (value = "selectedActors", required = false) List<Long> selectedActors, HttpSession session) {
 
         //Collect the genres
-        List<Genre> collectedGenres = genreService.findAll().stream().filter(genre -> {
-            return selectedGenres.contains(genre.getID());
-        }).toList();
+        List<Genre> collectedGenres = new ArrayList<>();
+        if (selectedGenres != null) {
+            collectedGenres = genreService.findAll().stream().filter(genre -> {
+                return selectedGenres.contains(genre.getID());
+            }).toList();
+        }
 
         //Collect the Directors
-        List<Director> collectedDirectors = directorService.findAll().stream().filter(director -> {
-            return selectedDirectors.contains(director.getID());
-        }).toList();
+        List<Director> collectedDirectors = new ArrayList<>();
+        if (selectedDirectors != null) {
+            collectedDirectors = directorService.findAll().stream().filter(director -> {
+                return selectedDirectors.contains(director.getID());
+            }).toList();
+        }
 
         //Collect the actors
-        List<Actor> collectedActors = actorService.findAll().stream().filter(actor -> {
-            return selectedActors.contains(actor.getID());
-        }).toList();
+        List<Actor> collectedActors = new ArrayList<>();
+        if (selectedActors != null) {
+            collectedActors = actorService.findAll().stream().filter(actor -> {
+                return selectedActors.contains(actor.getID());
+            }).toList();
+        }
 
         //Get the current user and save with new values
         User loggedInUser = (User) session.getAttribute("LoggedInUser");

@@ -11,6 +11,10 @@ public interface GameService {
 
     void addMoviesToGame(int n, String sessionId);
 
+    void addPreferenceMoviesToGame(int n, String sessionId,
+                                   List<Long> genreIds, List<Long> actorIds, List<Long> directorIds,
+                                   String genresEmpty, String actorsEmpty, String directorsEmpty);
+
     List<Game> findAllBySessionID(String sessionID);
 
     void increaseVote(String title, String sessionID);

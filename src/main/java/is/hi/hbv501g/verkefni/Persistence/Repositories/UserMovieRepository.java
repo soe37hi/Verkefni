@@ -21,11 +21,16 @@ public interface UserMovieRepository extends JpaRepository<UserMovie, Long> {
             "JOIN MoviesGenres mg ON m.ID = mg.movieID " +
             "JOIN MoviesActors ma ON m.ID = ma.movieID " +
             "JOIN MoviesDirectors md ON m.ID = md.movieID " +
-            "WHERE mg.genreID IN :genres AND ma.actorID IN :actors AND md.directorID IN :directors"
+            "WHERE (mg.genreID IN :genres OR :genresEmpty IS NULL) " +
+                    "AND (ma.actorID IN :actors OR :actorsEmpty IS NULL) " +
+                    "AND (md.directorID IN :directors OR :directorsEmpty IS NULL)"
     )
     List<Movie> findMoviesByPreference(
             @Param("genres") List<Long> genres,
             @Param("actors") List<Long> actors,
-            @Param("directors") List<Long> directors
+            @Param("directors") List<Long> directors,
+            @Param("genresEmpty") String genresEmpty,
+            @Param("actorsEmpty") String actorsEmpty,
+            @Param("directorsEmpty") String directorsEmpty
     );
 }

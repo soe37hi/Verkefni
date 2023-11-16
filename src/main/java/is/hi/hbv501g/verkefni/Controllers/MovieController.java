@@ -78,8 +78,29 @@ public class MovieController {
         }
 
 
+        String genresEmpty = "FALSE";
+
+        if (genreIds.isEmpty()) {
+            genresEmpty = null;
+        }
+
+
+        String actorsEmpty = "FALSE";
+
+        if (actorIds.isEmpty()) {
+            actorsEmpty = null;
+        }
+
+
+        String directorsEmpty = "FALSE";
+
+        if (directorIds.isEmpty()) {
+            directorsEmpty = null;
+        }
+
         List<Movie> results =
-                userMovieRepository.findMoviesByPreference(genreIds,actorIds,directorIds);
+                userMovieRepository.findMoviesByPreference(genreIds,actorIds,directorIds,
+                        genresEmpty,actorsEmpty,directorsEmpty);
         model.addAttribute("results", results);
 
         return "preferenceMovies";
