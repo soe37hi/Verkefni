@@ -3,6 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Game List</title>
+    <style>
+        .table-image {
+            max-width: 100px; /* Adjust the width as needed */
+            max-height: 100px; /* Adjust the height as needed */
+        }
+
+        .padding {
+            padding-right: 50px; /* Adjust the space as needed */
+        }
+
+        .center {
+            text-align: center; /* Center align the text */
+        }
+    </style>
 </head>
 <body>
 <h1>Results</h1>
@@ -11,16 +25,17 @@
     <thead>
     <tr>
         <th>Movie</th>
+        <th></th>
         <th>Votes</th>
-        <!-- Add more table headers for other fields as needed -->
+
     </tr>
     </thead>
     <tbody>
-    <!-- Iterate through the list of Game entities -->
-    <tr th:each="result : ${results}">
-        <td th:text="${result.title} + ' (' + ${result.year} + ')'"></td>
-        <td th:text="${result.votes}"></td>
-        <!-- Add more table data cells for other fields as needed -->
+
+    <tr th:each="movie : ${results}">
+        <td th:text="${movie.title} + ' (' + ${movie.year} + ')'"></td>
+        <td class="padding"> <img  class="table-image" alt="movieposter" th:src="${movie.posterURL}"></td>
+        <td class="center" th:text="${movie.votes}"></td>
     </tr>
     </tbody>
 </table>

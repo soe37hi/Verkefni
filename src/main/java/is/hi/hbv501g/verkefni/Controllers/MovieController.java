@@ -30,7 +30,6 @@ public class MovieController {
         System.out.println(movie);
         this.movieService.save(movie);
         return "redirect:/movies";
-
     }
 
     @RequestMapping(value = "/allUserMovies", method = RequestMethod.POST)
@@ -107,25 +106,50 @@ public class MovieController {
     }
 
     @RequestMapping(value = "/addmovie", method = RequestMethod.GET)
-    public String addMovieGET(){
+    public String addMovieGET(HttpSession session){
+        User user = (User) session.getAttribute("LoggedInUser");
+
+        if(user == null || !user.getIsAdmin()) {
+            return "redirect:/";
+        }
+
         return "addmovie";
     }
 
     @GetMapping("movies")
-    public String movies(Model model) {
+    public String movies(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("LoggedInUser");
+
+        if(user == null || !user.getIsAdmin()) {
+            return "redirect:/";
+        }
+
         model.addAttribute("time", LocalDateTime.now());
         model.addAttribute("allMovies", this.movieService.findAll());
+
         return "movies";
     }
 
     @PostMapping("/delete/{movieID}")
-    public String deleteMovie(@PathVariable("movieID") Long movieID) {
+    public String deleteMovie(@PathVariable("movieID") Long movieID, HttpSession session) {
+        User user = (User) session.getAttribute("LoggedInUser");
+
+        if(user == null || !user.getIsAdmin()) {
+            return "redirect:/";
+        }
+
         this.movieService.deleteMovieByID(movieID);
         return "redirect:/movies";
     }
 
     @GetMapping("/editmovie/{movieID}")
-    public String editMovie(@PathVariable("movieID") Long movieID, Model model) {
+    public String editMovie(@PathVariable("movieID") Long movieID, Model model, HttpSession session) {
+        User user = (User) session.getAttribute("LoggedInUser");
+
+        if(user == null || !user.getIsAdmin()) {
+            return "redirect:/";
+        }
+
         Movie movie = this.movieService.loadMovie(movieID);
         model.addAttribute("movie", movie);
         return "editmovie";

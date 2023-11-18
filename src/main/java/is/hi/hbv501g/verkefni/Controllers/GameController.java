@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -106,6 +107,8 @@ public class GameController {
     public String results(HttpSession session, Model model){
         String sessionID = (String) session.getAttribute("sessionID");
 
+        session.setAttribute("randomPin", null);
+
         int playersJoined = gameSessionService.playersJoined(sessionID);
         int playersFinishedVoting = gameSessionService.playersFinishedVoting(sessionID);
 
@@ -132,10 +135,12 @@ public class GameController {
         List<String> directors = directorRepository.findDirectorsByMovieID(movieID);
         List<String> actors = actorRepository.findActorsByMovieID(movieID);
 
+        DecimalFormat df = new DecimalFormat("#.#");
+
         Map<String, Object> response = new HashMap<>();
         response.put("overview", moviesInfo.getOverview());
         response.put("length", moviesInfo.getLength());
-        response.put("rating", moviesInfo.getRating());
+        response.put("rating", df.format(moviesInfo.getRating()));
         response.put("genres", genres);
         response.put("directors", directors);
         response.put("actors", actors);
